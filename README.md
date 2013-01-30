@@ -1,6 +1,8 @@
 Growing-Weed-Plant
 ==================
 
+## [How to install](https://github.com/ms333/Growing-Weed-Plant/wiki/How-to-install)
+
 A Growing Weed Plant for DarkRP - Credits to the creator.
 
 Originally fixed by Pebsie to work with Gmod 13 but broke after a recent DarkRP update.
