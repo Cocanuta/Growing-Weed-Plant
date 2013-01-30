@@ -19,43 +19,29 @@ self.damage = 10
 end
 
 function ENT:OnTakeDamage(dmg)
+	self.damage = self.damage - dmg:GetDamage()
 
-self.damage = self.damage - dmg:GetDamage()
-
-if (self.damage <= 0) then
-
-local effectdata = EffectData()
-
-effectdata:SetOrigin(self.Entity:GetPos())
-
-effectdata:SetMagnitude(2)
-
-effectdata:SetScale(2)
-
-effectdata:SetRadius(3)
-
-util.Effect("Sparks", effectdata)
-
-self.Entity:Remove()
-
-end
-
+	if (self.damage <= 0) then
+		local effectdata = EffectData()
+		effectdata:SetOrigin(self.Entity:GetPos())
+		effectdata:SetMagnitude(2)
+		effectdata:SetScale(2)
+		effectdata:SetRadius(3)
+		util.Effect("Sparks", effectdata)
+		self.Entity:Remove()
+	end
 end
 
 function ENT:Use()
-
-if self.Entity:GetNWBool("Usable") == true then
-	self.Entity:SetNWBool("Usable", false)
-	self.Entity:SetNWBool("Plantable", true)
-	self.Entity:SetModel("models/nater/weedplant_pot_dirt.mdl")
-	local SpawnPos = self.Entity:GetPos()
-	local WeedBag = ents.Create("durgz_weed")
-	SpawnPos = SpawnPos + Vector(0,0,15)
-	WeedBag:SetPos(SpawnPos)
-	WeedBag:Spawn()
-
-end
-
+	if self.Entity:GetNWBool("Usable") == true then
+		self.Entity:SetNWBool("Usable", false)
+		self.Entity:SetNWBool("Plantable", true)
+		self.Entity:SetModel("models/nater/weedplant_pot_dirt.mdl")
+		local SpawnPos = self.Entity:GetPos()
+		local WeedBag = ents.Create("durgz_weed")
+		WeedBag:SetPos(SpawnPos + Vector(0,0,15))
+		WeedBag:Spawn()
+	end
 end
 
 function ENT:Touch(hitEnt)

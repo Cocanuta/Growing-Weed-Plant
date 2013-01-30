@@ -1,7 +1,3 @@
--- ========================
--- =          Crate SENT by Mahalis
--- ========================
-
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 
@@ -15,9 +11,7 @@ function ENT:Initialize()
 	self.Entity:SetUseType(SIMPLE_USE)
 	local phys = self.Entity:GetPhysicsObject()
 	if phys and phys:IsValid() then phys:Wake() end
-	self.sparking = false
 	self.damage = 50
-	local ply = self.Entity:GetNWEntity("owning_ent")
 end
 
 function ENT:OnTakeDamage(dmg)
@@ -32,6 +26,4 @@ end
 
 function ENT:OnRemove()
 	timer.Destroy(self.Entity:EntIndex())
-	local ply = self.Entity:GetNWEntity("owning_ent")
-	
 end

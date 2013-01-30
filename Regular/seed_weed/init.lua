@@ -1,7 +1,3 @@
--- ========================
--- =          Crate SENT by Mahalis
--- ========================
-
 AddCSLuaFile("cl_init.lua")
 AddCSLuaFile("shared.lua")
 
@@ -15,7 +11,6 @@ function ENT:Initialize()
 	self.Entity:SetUseType(SIMPLE_USE)
 	local phys = self.Entity:GetPhysicsObject()
 	if phys and phys:IsValid() then phys:Wake() end
-	self.sparking = false
 	self.damage = 50
 end
 
