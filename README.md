@@ -7,6 +7,6 @@ Originally fixed by Pebsie to work with Gmod 13 but broke after a recent DarkRP 
 
 You need to subscribe to/download Drugzmod in order to make this work.
 
-Drugzmod on the workshop can by found here: http://steamcommunity.com/sharedfiles/filedetails/?id=112986621
+Drugzmod on the workshop can by found [HERE](http://steamcommunity.com/sharedfiles/filedetails/?id=112986621)
 
-Models for FastDL and other stuff: http://www.garrysmod.org/downloads/?a=view&id=68156
+Models for FastDL and other stuff: [HERE](http://www.garrysmod.org/downloads/?a=view&id=68156)
