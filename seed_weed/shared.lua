@@ -1,6 +1,6 @@
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Growing Weed Plant"
-ENT.Author = "Standalone"
+ENT.PrintName = "Weed Seed"
+ENT.Author = "N/A"
 ENT.Spawnable = false
 ENT.AdminSpawnable = false
