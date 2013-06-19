@@ -79,7 +79,7 @@ local function Stages(self)
 	end)
 end
 
-function ENT:Touch(hitEnt)
+function ENT:StartTouch(hitEnt)
 	if hitEnt:GetClass() == "seed_weed" and self.isPlantable == true then
 		self.isPlantable = false			
 		hitEnt:Remove()
