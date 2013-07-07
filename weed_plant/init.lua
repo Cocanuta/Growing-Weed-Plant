@@ -14,6 +14,7 @@ function ENT:Initialize()
 	self.isUsable = false
 	self.isPlantable = true
 	self.damage = 60
+	self.magic = false
 end
 
 function ENT:OnTakeDamage(dmg)
@@ -23,13 +24,14 @@ function ENT:OnTakeDamage(dmg)
 	end
 end
 
-function ENT:Use()
+function ENT:Use( ply, activator )
+	local moneygain = PLANT_CONFIG.MoneyAmount -- variable for outcome 2
 	if self.isUsable == true then
 		self.isUsable = false
 		self.isPlantable = true
 		self:SetModel("models/nater/weedplant_pot_dirt.mdl")
 		local SpawnPos = self:GetPos()
-		if PLANT_CONFIG.Outcome==1 then
+		if PLANT_CONFIG.Outcome == 1 then
 			local WeedBag = ents.Create("durgz_weed")
 			if !IsValid(WeedBag) then 
 				DarkRPCreateMoneyBag(SpawnPos + Vector(0,0,15), PLANT_CONFIG.MoneyAmount or 150)
@@ -39,9 +41,24 @@ function ENT:Use()
 			end
 			WeedBag:SetPos(SpawnPos + Vector(0,0,15))
 			WeedBag:Spawn()
-		else
-			DarkRPCreateMoneyBag(SpawnPos + Vector(0,0,15), PLANT_CONFIG.MoneyAmount or 150)
+		elseif PLANT_CONFIG.Outcome == 2 then -- Specifies for option 2?
+			activator:AddMoney(moneygain) -- Money goes straight to your wallet instead of create a money bag
+			GAMEMODE:Notify(ply, 0, 4, "You've received " .. GAMEMODE.Config.currency .. moneygain .. " for looting the money pot.")
 		end
+	end
+	self.magic = false
+end
+
+
+-- Who doesn't like a little magic for growing weed?
+function ENT:Think()
+	if self.magic then
+		local effectdata = EffectData()
+		effectdata:SetOrigin(self:GetPos() + Vector( 0 , 0, 15 ))
+		effectdata:SetMagnitude(1)
+		effectdata:SetScale(1)
+		effectdata:SetRadius(2)
+		util.Effect("inflator_magic", effectdata)
 	end
 end
 
@@ -70,6 +87,7 @@ local function Stages(self)
 								if !IsValid(self) then return end
 								self:SetModel("models/nater/weedplant_pot_growing7.mdl")
 								self.isUsable = true
+								self.magic = true -- Final stage will display a small effect when it's done.
 							end)
 						end)
 					end)
