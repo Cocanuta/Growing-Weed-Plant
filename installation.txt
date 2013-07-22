@@ -1,0 +1,24 @@
+How to install the Growing Weed Plant
+
+Installation:
+1) Place the seed_weed and weed_plant entities into your darkrp/entities/entities folder.
+
+2) Place the following into your addentities.lua so players can buy it in-game;
+
+AddEntity("Pot", {
+	ent = "weed_plant",
+	model = "models/nater/weedplant_pot_planted.mdl",
+	price = 75,
+	max = 4,
+	cmd = "/buypot"
+})
+
+AddEntity("Seed", {
+	ent = "seed_weed",
+	model = "models/props_junk/watermelon01.mdl",
+	price = 100,
+	max = 4,
+	cmd = "/buyseed"
+})
+
+3) Restart your server and enjoy.
