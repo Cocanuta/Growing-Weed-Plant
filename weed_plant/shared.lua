@@ -30,7 +30,7 @@ PLANT_CONFIG = {}
 	*/
 	-- Outcome (1 = drugs, 2 = money)
 	PLANT_CONFIG.Outcome = 1
-	-- Money Amount ONLY USED IF Outcome is 2
+	-- Money Amount ONLY USED IF Outcome is 2 or Drugzmod is installed incorrectly.
 	PLANT_CONFIG.MoneyAmount = 150
 	-- Plant Name
 	PLANT_CONFIG.PlantName = "Weed Plant" -- Some people prefer to call it Cannabis. Edit it if you want to.

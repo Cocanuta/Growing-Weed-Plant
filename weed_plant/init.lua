@@ -24,33 +24,32 @@ function ENT:OnTakeDamage(dmg)
 	end
 end
 
-function ENT:Use( ply, activator )
-	local moneygain = PLANT_CONFIG.MoneyAmount -- variable for outcome 2
+function ENT:Use( activator, caller )
+	if !IsValid(activator) or !activator:IsPlayer() then return end
+	local moneygain = PLANT_CONFIG.MoneyAmount or 150
 	if self.isUsable == true then
 		self.isUsable = false
 		self.isPlantable = true
 		self:SetModel("models/nater/weedplant_pot_dirt.mdl")
 		local SpawnPos = self:GetPos()
-		if PLANT_CONFIG.Outcome == 1 then
+		if PLANT_CONFIG.Outcome == 1 then -- Outcome 1 makes weed
 			local WeedBag = ents.Create("durgz_weed")
 			if !IsValid(WeedBag) then 
-				DarkRPCreateMoneyBag(SpawnPos + Vector(0,0,15), PLANT_CONFIG.MoneyAmount or 150)
+				activator:AddMoney(moneygain)
 				PrintMessage( HUD_PRINTTALK, "[Weed Plant] Drugzmod isn't installed correctly!")
 				PrintMessage( HUD_PRINTTALK, "[Weed Plant] Set Outcome to 2 in order to print money instead")
 				return false
 			end
 			WeedBag:SetPos(SpawnPos + Vector(0,0,15))
 			WeedBag:Spawn()
-		elseif PLANT_CONFIG.Outcome == 2 then -- Specifies for option 2?
-			activator:AddMoney(moneygain) -- Money goes straight to your wallet instead of create a money bag
-			GAMEMODE:Notify(ply, 0, 4, "You've received " .. GAMEMODE.Config.currency .. moneygain .. " for looting the money pot.")
+		elseif PLANT_CONFIG.Outcome == 2 then -- Outcome 2 gives money
+			activator:AddMoney(moneygain)
+			GAMEMODE:Notify(ply, 0, 4, "You've received " .. GAMEMODE.Config.currency .. moneygain .. " for looting the weed pot.")
 		end
 	end
 	self.magic = false
 end
 
-
--- Who doesn't like a little magic for growing weed?
 function ENT:Think()
 	if self.magic then
 		local effectdata = EffectData()
@@ -68,21 +67,27 @@ local function Stages(self)
 	timer.Simple(tonumber(PLANT_CONFIG.Stage1) or 30, function()
 		if !IsValid(self) then return end
 		self:SetModel("models/nater/weedplant_pot_growing1.mdl")
+
 		timer.Simple(tonumber(PLANT_CONFIG.Stage2) or 30, function()
 			if !IsValid(self) then return end
 			self:SetModel("models/nater/weedplant_pot_growing2.mdl")
+
 			timer.Simple(tonumber(PLANT_CONFIG.Stage3) or 30, function()
 				if !IsValid(self) then return end
 				self:SetModel("models/nater/weedplant_pot_growing3.mdl")
+
 				timer.Simple(tonumber(PLANT_CONFIG.Stage4) or 30, function()
 					if !IsValid(self) then return end
 					self:SetModel("models/nater/weedplant_pot_growing4.mdl")
+
 					timer.Simple(tonumber(PLANT_CONFIG.Stage5) or 30, function()
 						if !IsValid(self) then return end
 						self:SetModel("models/nater/weedplant_pot_growing5.mdl")
+
 						timer.Simple(tonumber(PLANT_CONFIG.Stage6) or 30, function()
 							if !IsValid(self) then return end
 							self:SetModel("models/nater/weedplant_pot_growing6.mdl")
+
 							timer.Simple(tonumber(PLANT_CONFIG.Stage7) or 30, function()
 								if !IsValid(self) then return end
 								self:SetModel("models/nater/weedplant_pot_growing7.mdl")
