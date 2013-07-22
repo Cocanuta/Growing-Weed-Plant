@@ -26,8 +26,8 @@ end
 
 function ENT:Use( activator, caller )
 	if !IsValid(activator) or !activator:IsPlayer() then return end
-	local moneygain = PLANT_CONFIG.MoneyAmount or 150
 	if self.isUsable == true then
+		local moneygain = PLANT_CONFIG.MoneyAmount or 150
 		self.isUsable = false
 		self.isPlantable = true
 		self:SetModel("models/nater/weedplant_pot_dirt.mdl")
