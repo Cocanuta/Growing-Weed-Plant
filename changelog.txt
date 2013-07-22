@@ -1,5 +1,0 @@
-Sunday, July 07, 2013:
-- Forked from MS333 github for some needed fixes
-- Added help file for people who don't know how to install
-- Added changelog to keep people notified on changes that happen.
-- Removed addentities.lua since it was confusing and never updated.
