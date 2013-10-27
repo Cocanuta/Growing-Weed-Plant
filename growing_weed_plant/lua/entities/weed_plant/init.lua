@@ -10,8 +10,9 @@ function ENT:Initialize()
 	self:SetUseType(SIMPLE_USE)
 
 	local phys = self:GetPhysicsObject()
-	if phys and phys:IsValid() then phys:Wake() end
-	self.isUsable = false
+	if IsValid(phys) then phys:Wake() end
+
+	self.isReady = false
 	self.isPlantable = true
 	self.damage = 60
 	self.magic = false
@@ -24,28 +25,30 @@ function ENT:OnTakeDamage(dmg)
 	end
 end
 
-function ENT:Use( activator, caller )
-	if !IsValid(activator) or !activator:IsPlayer() then return end
-	if self.isUsable == true then
-		local moneygain = PLANT_CONFIG.MoneyAmount or 150
-		self.isUsable = false
-		self.isPlantable = true
-		self:SetModel("models/nater/weedplant_pot_dirt.mdl")
-		local SpawnPos = self:GetPos()
-		if PLANT_CONFIG.Outcome == 1 then -- Outcome 1 makes weed
-			local WeedBag = ents.Create("durgz_weed")
-			if !IsValid(WeedBag) then 
-				activator:AddMoney(moneygain)
-				PrintMessage( HUD_PRINTTALK, "[Weed Plant] Drugzmod isn't installed correctly!")
-				PrintMessage( HUD_PRINTTALK, "[Weed Plant] Set Outcome to 2 in order to print money instead")
-				return false
-			end
-			WeedBag:SetPos(SpawnPos + Vector(0,0,15))
-			WeedBag:Spawn()
-		elseif PLANT_CONFIG.Outcome == 2 then -- Outcome 2 gives money
-			activator:AddMoney(moneygain)
-			GAMEMODE:Notify(ply, 0, 4, "You've received " .. GAMEMODE.Config.currency .. moneygain .. " for looting the weed pot.")
+function ENT:Use(activator)
+	if !IsValid(activator) or !activator:IsPlayer() or self.isReady != true then return end
+	self.isReady = false
+	self.isPlantable = true
+	self:SetModel("models/nater/weedplant_pot_dirt.mdl")
+	local SpawnPos = self:GetPos()
+	local OutputMoney = GWPlant.OutputAmount or 250
+	if !GWPlant.OutputMoney then -- Make weed
+		local WeedBag = ents.Create("durgz_weed")
+		if !IsValid(WeedBag) then 
+			activator:addMoney(OutputMoney)
+			PrintMessage( HUD_PRINTTALK, "[Weed Plant] Drugzmod isn't installed correctly!")
+			PrintMessage( HUD_PRINTTALK, "[Weed Plant] Set GWPlant.OutputMoney to true to give money.")
+			return false
 		end
+		WeedBag:SetPos(SpawnPos + Vector(0,0,15))
+		WeedBag:Spawn()
+	else -- Make money
+		activator:addMoney(OutputMoney)
+		local currency = GAMEMODE.Config.currency or "$"
+		if currency == "$" then
+			DarkRP.notify(ply, 0, 4, "You've received "..currency..OutputMoney.." for looting the weed pot.")
+		else
+			DarkRP.notify(ply, 0, 4, "You've received "..OutputMoney..currency.." for looting the weed pot.")
 	end
 	self.magic = false
 end
@@ -64,34 +67,34 @@ end
 local function Stages(self)
 	if !IsValid(self) then return end
 	-- Timers
-	timer.Simple(tonumber(PLANT_CONFIG.Stage1) or 30, function()
+	timer.Simple(tonumber(GWPlant.Stage1) or 30, function()
 		if !IsValid(self) then return end
 		self:SetModel("models/nater/weedplant_pot_growing1.mdl")
 
-		timer.Simple(tonumber(PLANT_CONFIG.Stage2) or 30, function()
+		timer.Simple(tonumber(GWPlant.Stage2) or 30, function()
 			if !IsValid(self) then return end
 			self:SetModel("models/nater/weedplant_pot_growing2.mdl")
 
-			timer.Simple(tonumber(PLANT_CONFIG.Stage3) or 30, function()
+			timer.Simple(tonumber(GWPlant.Stage3) or 30, function()
 				if !IsValid(self) then return end
 				self:SetModel("models/nater/weedplant_pot_growing3.mdl")
 
-				timer.Simple(tonumber(PLANT_CONFIG.Stage4) or 30, function()
+				timer.Simple(tonumber(GWPlant.Stage4) or 30, function()
 					if !IsValid(self) then return end
 					self:SetModel("models/nater/weedplant_pot_growing4.mdl")
 
-					timer.Simple(tonumber(PLANT_CONFIG.Stage5) or 30, function()
+					timer.Simple(tonumber(GWPlant.Stage5) or 30, function()
 						if !IsValid(self) then return end
 						self:SetModel("models/nater/weedplant_pot_growing5.mdl")
 
-						timer.Simple(tonumber(PLANT_CONFIG.Stage6) or 30, function()
+						timer.Simple(tonumber(GWPlant.Stage1) or 30, function()
 							if !IsValid(self) then return end
 							self:SetModel("models/nater/weedplant_pot_growing6.mdl")
 
-							timer.Simple(tonumber(PLANT_CONFIG.Stage7) or 30, function()
+							timer.Simple(tonumber(GWPlant.Stage7) or 30, function()
 								if !IsValid(self) then return end
 								self:SetModel("models/nater/weedplant_pot_growing7.mdl")
-								self.isUsable = true
+								self.isReady = true
 								self.magic = true -- Final stage will display a small effect when it's done.
 							end)
 						end)

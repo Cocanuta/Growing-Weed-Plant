@@ -10,7 +10,7 @@ function ENT:Initialize()
 	self:SetSolid(SOLID_VPHYSICS)
 	self:SetUseType(SIMPLE_USE)
 	local phys = self:GetPhysicsObject()
-	if phys and phys:IsValid() then phys:Wake() end
+	if IsValid(phys) then phys:Wake() end
 	self.damage = 50
 end
 
@@ -21,8 +21,8 @@ function ENT:OnTakeDamage(dmg)
 	end
 end
 
-function ENT:Use(activator,caller)
+function ENT:Use(activator)
 	if IsValid(activator) and activator:IsPlayer() then
-		GAMEMODE:Notify(activator, 1, 4, "Put this in a Pot")
+		DarkRP.notify(activator, 0, 4, "Put this in a Pot")
 	end
 end
