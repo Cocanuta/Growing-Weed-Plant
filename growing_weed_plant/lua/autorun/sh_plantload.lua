@@ -29,10 +29,7 @@ Values.PlantTable = {
     cmd = "buyplant"
 }
 
-if Values.AllowedJobs then
-	Values.SeedTable.allowed = Values.AllowedJobs
-	Values.PlantTable.allowed = Values.AllowedJobs
-end
-
-DarkRP.createEntity(Values.SeedName, Values.SeedTable)
-DarkRP.createEntity(Values.PotName, Values.PlantTable)
+hook.Add("Initialize", "LoadEntities", function()
+    DarkRP.createEntity(Values.SeedName, Values.SeedTable)
+    DarkRP.createEntity(Values.PotName, Values.PlantTable)
+end)

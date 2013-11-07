@@ -2,13 +2,17 @@ Growing-Weed-Plant
 ==================
 
 ## [How to install](https://github.com/ms333/Growing-Weed-Plant/wiki/How-to-install)
-== Configuration in weed_plant/shared.lua ==
+== Configuration in plant_settings ==
 
-A Growing Weed Plant for DarkRP - Credits to the creator.
+Put the folder growing_weed_plant in your addons folder. DarkRP 2.5.0 required.
+
+A Growing Weed Plant for DarkRP - Credits for idea to creator.
+
+(REQUIRED) Model for pot plant: [HERE](https://mega.co.nz/#!NxkWUR6T!VHOWW0Du-dTtw8CVDl8IkH-HJjARnbX50C45gTRQb4o)
 
 You need to subscribe to/download Drugzmod in order to make this work.
-(NEW) Or change Outcome in weed_plant/shared.lua to 2 in order to print money instead.
+Or set GWPlant.OutputMoney in plant_settings.lua to true.
 
 Drugzmod on the workshop can by found [HERE](http://steamcommunity.com/sharedfiles/filedetails/?id=112986621)
 
-Models for FastDL and other stuff: [HERE](http://www.garrysmod.org/downloads/?a=view&id=68156)
+

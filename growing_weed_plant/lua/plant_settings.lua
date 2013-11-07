@@ -1,8 +1,5 @@
 -- Configuration file for growing weed plant
 
--- Jobs allowed to purchase seeds,pots. Remove the line if everyone should be able to buy it.
-GWPlant.AllowedJobs = {TEAM_MOB, TEAM_GANGSTER}
-
 -- Name of plant (name will be above plant) - Remove the line to hide all text
 GWPlant.PlantName = "Weed Plant"
 

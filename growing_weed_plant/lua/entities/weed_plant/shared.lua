@@ -7,5 +7,6 @@ ENT.AdminSpawnable = false
 
 function ENT:SetupDataTables()
 	self:NetworkVar("Int",0,"price")
+	self:NetworkVar("Int",1,"Stage")
 	self:NetworkVar("Entity",0,"owning_ent")
 end
